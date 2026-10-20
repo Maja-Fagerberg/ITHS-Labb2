@@ -3,6 +3,7 @@ LevelData levelData = new();
 
 Player player = levelData.Load("Level1.txt");
 
+//Denna ska flyttas senare för att få vision range?
 foreach (var levelElement in levelData.Elements)
 {
     levelElement.Draw();
@@ -11,31 +12,73 @@ foreach (var levelElement in levelData.Elements)
 bool gameOn = true;
 while (gameOn)
 {
+    Console.CursorVisible = false;
     player.Draw();
     ConsoleKeyInfo keyPressed = Console.ReadKey();
-    Console.Write(" "); // Fungerar med alla förutom 
+    Console.Write(" ");
     switch (keyPressed.Key)
     {
         case ConsoleKey.UpArrow:
-        player.YPosition++;
-        break;
-        case ConsoleKey.DownArrow:
-        player.YPosition--;
-        break;
-        case ConsoleKey.LeftArrow:
-        player.XPosition++;
-        break;
-        case ConsoleKey.RightArrow:
-        player.XPosition--;
-        break;
-        case ConsoleKey.Escape:
-        Console.WriteLine("Are you sure you want to quit?"); //Varför Skriver den inte ut första bokstavevn? 
-        // NÅgot att göra med console readlkey?
+            //Kan man bara tabba ner såhär för att undvika för långa rader?
+            if (levelData.Elements.Any(e => e.XPosition == player.XPosition 
+                && e.YPosition == player.YPosition-1 
+                && (e.Character == 'r' || e.Character == 's')))
+            {
+                Console.WriteLine("COMBAT!!");
+            }
 
-        //Kolla fix för nullable readlien, antingen ! eller annat
-        int choice = int.Parse(Console.ReadLine()!);
-        gameOn = choice != 1;
-        break;
+            if (!levelData.Elements.Any(e => e.XPosition == player.XPosition && e.YPosition == player.YPosition-1))
+            { player.YPosition--; }
+
+            //Enemy.update();
+            break;
+        case ConsoleKey.DownArrow:
+            if (levelData.Elements.Any(e => e.XPosition == player.XPosition 
+                && e.YPosition == player.YPosition-1 
+                && (e.Character == 'r' || e.Character == 's')))
+            {
+                Console.WriteLine("COMBAT!!");
+            }
+
+            if (!levelData.Elements.Any(e => e.XPosition == player.XPosition && e.YPosition == player.YPosition+1))
+            { player.YPosition++; }
+
+            //Enemy.update();
+            break;
+        case ConsoleKey.LeftArrow:
+            if (levelData.Elements.Any(e => e.XPosition == player.XPosition 
+                && e.YPosition == player.YPosition-1 
+                && (e.Character == 'r' || e.Character == 's')))
+            {
+                Console.WriteLine("COMBAT!!");
+            }
+            
+            if (!levelData.Elements.Any(e => e.XPosition == player.XPosition-1 && e.YPosition == player.YPosition))
+            { player.XPosition--; }
+
+            //Enemy.update();
+            break;
+            case ConsoleKey.RightArrow:
+            if (levelData.Elements.Any(e => e.XPosition == player.XPosition 
+                && e.YPosition == player.YPosition-1 
+                && (e.Character == 'r' || e.Character == 's')))
+            {
+                Console.WriteLine("COMBAT!!");
+            }
+            
+            if (!levelData.Elements.Any(e => e.XPosition == player.XPosition+1 && e.YPosition == player.YPosition))
+            { player.XPosition++; }
+            
+            //Enemy.update();
+            break;
+        case ConsoleKey.Escape:
+            Console.WriteLine("Are you sure you want to quit?"); //Varför Skriver den inte ut första bokstavevn? 
+            // NÅgot att göra med console readlkey?
+
+            //Kolla fix för nullable readlien, antingen ! eller annat
+            int choice = int.Parse(Console.ReadLine()!);
+            gameOn = choice != 1;
+            break;
     }
 }
 
@@ -125,7 +168,7 @@ class Snake : Enemy
 
 class LevelData
 {
-    private List<LevelElement> elements = new List<LevelElement>();
+    private List<LevelElement> elements = new();
     public IReadOnlyList<LevelElement> Elements 
     { 
         get 
@@ -195,5 +238,20 @@ class LevelData
 
 class Dice
 {
+    public Dice(int numberOfDice, int sidesPerDice, int modifier)
+    {
+        //numberOfDice*(random:1-sidesPerDice + modifier)
+    }
 
+    // public override string Dice()
+    // {
+    //     string något to string
+    //     return string
+    // }
+    
+    public static int Throw()
+    {
+        int result = 0;
+        return result;
+    }
 }
