@@ -8,11 +8,8 @@ class Snake : Enemy
 
     }
     
-    public override void Update()
+    public override void Update(LevelData levelData)
     {
-
-        Random rnd = new();
-        int direction = rnd.Next(1,4);
-
+        
     }
 }

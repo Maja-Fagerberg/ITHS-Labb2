@@ -10,5 +10,5 @@ abstract class Enemy : Entity
         Name = name;
     }
 
-    public abstract void Update();
+    public abstract void Update(LevelData levelData);
 }

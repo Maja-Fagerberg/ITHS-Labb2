@@ -56,6 +56,7 @@ class LevelData
         }
         
         Player player = new(playerX, playerY);
+        elements.Add(player);
         return player;
     }
 
@@ -74,7 +75,7 @@ class LevelData
 
     public bool IsPlayerOnSpot(int x, int y)
     {
-        bool isPlayerOnSpot = false;
+        bool isPlayerOnSpot = Elements.Any(e => e.XPosition == x && e.YPosition == y && (e.Character == '@'));
         //Villkor: om LevelElement.player xpos och ypos är lika med x och y ? true : false; eller?
         //ska jag skicka in playerxpos och playerypos  eller inte
         return isPlayerOnSpot;

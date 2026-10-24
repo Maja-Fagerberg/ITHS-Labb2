@@ -13,13 +13,14 @@ class Dice
         _modifier = modifier;
     }
 
-    public override string Dice()
-    {
+    // public override string Dice()
+    // {
 
-    }
+    // }
     
     public static int Throw()
     {
-        
+        int score = 0;
+        return score;
     }
 }
