@@ -11,9 +11,4 @@ abstract class Enemy : Entity
     }
 
     public abstract void Update();
-
-    static void Combat(Enemy attacker, Player defender)
-    {
-        Console.WriteLine($"Enemy{defender} is attacking Player{attacker}!");
-    }
 }

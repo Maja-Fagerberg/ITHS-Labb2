@@ -2,26 +2,24 @@ namespace Labb2;
 
 class Dice
 {
-    private int numberOfDice;
-    private int sidesPerDice;
-    private int modifier;
+    private int _numberOfDice;
+    private int _sidesPerDice;
+    private int _modifier;
 
     public Dice(int numberOfDice, int sidesPerDice, int modifier)
     {
-        this.numberOfDice = numberOfDice;
-        this.sidesPerDice = sidesPerDice;
-        this.modifier = modifier;
+        _numberOfDice = numberOfDice;
+        _sidesPerDice = sidesPerDice;
+        _modifier = modifier;
     }
 
-    // public override string Dice()
-    // {
-    //     string något to string
-    //     return string
-    // }
+    public override string Dice()
+    {
+
+    }
     
     public static int Throw()
     {
-        int result = 0;
-        return result;
+        
     }
 }

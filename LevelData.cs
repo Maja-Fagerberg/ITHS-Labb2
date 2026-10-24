@@ -16,8 +16,8 @@ class LevelData
         using StreamReader reader = new(filename);
         int x = 0;
         int y = 0;
-
-        Player player = new(x, y); // Räcker detta? Testa
+        int playerX = 0;
+        int playerY = 0;
         
         while (!reader.EndOfStream)
         {
@@ -31,10 +31,8 @@ class LevelData
                     x++;
                     break;
                 case '@':
-
-                    // Spara undan XY för player separat? Koden nedan fungerar ju inte längre
-                    // player.XPosition = column;
-                    // player.YPosition = row;
+                    playerX = x;
+                    playerY = y;
                     x++;
                     break;
                 case 'r':
@@ -56,6 +54,29 @@ class LevelData
                     break;
             }
         }
+        
+        Player player = new(playerX, playerY);
         return player;
+    }
+
+    public bool IsFreeSpot(int x, int y)
+    {
+        bool isFreeSpot = !Elements.Any(e => e.XPosition == x && e.YPosition == y);
+        return isFreeSpot;
+    }
+
+    //Returna en specifik enemy sen istället kanske. För att se vilken enemy man är i combat med.
+    public bool IsEnemyOnSpot(int x, int y)
+    {
+        bool isEnemyOnSpot = Elements.Any(e => e.XPosition == x && e.YPosition == y && (e.Character == 'r' || e.Character == 's'));
+        return isEnemyOnSpot;
+    }
+
+    public bool IsPlayerOnSpot(int x, int y)
+    {
+        bool isPlayerOnSpot = false;
+        //Villkor: om LevelElement.player xpos och ypos är lika med x och y ? true : false; eller?
+        //ska jag skicka in playerxpos och playerypos  eller inte
+        return isPlayerOnSpot;
     }
 }

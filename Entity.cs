@@ -10,7 +10,6 @@ class Entity : LevelElement
         HealthPoints = healthPoints;
     }
     
-
     //combat attacker plyer metod()
     //combat attacker enemy metod() overloading
     static void Combat(Player attacker, Enemy defender)

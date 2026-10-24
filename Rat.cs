@@ -7,9 +7,10 @@ class Rat : Enemy
     {
 
     }
+    
     public override void Update()
     {
         Random rnd = new();
-        
+        int direction = rnd.Next(1,4);
     }
 }
