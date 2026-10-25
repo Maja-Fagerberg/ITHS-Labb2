@@ -80,4 +80,9 @@ class LevelData
         bool isPlayerOnSpot = x == player.XPosition && y == player.YPosition;
         return isPlayerOnSpot;
     }
+
+    public void RemoveEnemyFromList(Enemy enemy)
+    {
+        elements.Remove(enemy);
+    }
 }
