@@ -2,13 +2,11 @@ namespace Labb2;
 
 abstract class Enemy : Entity
 {
-    public string? Name { get; private set; }
-    
-    protected Enemy(int xPosition, int yPosition, char character, int healthPoints, string name)
-    : base(xPosition, yPosition, character, ConsoleColor.Red , healthPoints)
+    protected Enemy(int xPosition, int yPosition, char character, string? name, int healthPoints, Dice attackDice, Dice defenceDice)
+    : base(xPosition, yPosition, character, ConsoleColor.Red, name, healthPoints, attackDice, defenceDice)
     {
-        Name = name;
+
     }
 
-    public abstract void Update(LevelData levelData, Player player);
+    public abstract bool Update(LevelData levelData, Player player);
 }
