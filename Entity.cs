@@ -4,8 +4,9 @@ class Entity : LevelElement
 {
     public int HealthPoints { get; private set; }
     
-    // public Dice AttackDice { get; set; } // Ska attack och defencedice in i konstruktorn tro?
-    // public Dice DefenceDice { get; set; }
+    //Lägg in i konstruktorn
+    public Dice AttackDice { get; set; }
+    public Dice DefenceDice { get; set; }
 
     public Entity(int xPosition, int yPosition, char character, ConsoleColor color, int healthPoints)
     : base(xPosition, yPosition, character, color)

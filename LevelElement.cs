@@ -7,7 +7,6 @@ abstract class LevelElement
     public char Character { get; private set; }
     public ConsoleColor Color { get; private set; }
 
-    //Konstruktorn. wall enemy player måste
     public LevelElement(int xPosition, int yPosition, char character, ConsoleColor color)
     {
         XPosition = xPosition;

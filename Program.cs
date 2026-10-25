@@ -38,7 +38,7 @@ while (gameOn)
         if (levelElement is Enemy enemy)
         {
             enemy.Draw();
-            enemy.Update(levelData);
+            enemy.Update(levelData, player);
             enemy.Draw();
         }
     }

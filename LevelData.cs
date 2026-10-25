@@ -56,7 +56,7 @@ class LevelData
         }
         
         Player player = new(playerX, playerY);
-        elements.Add(player);
+        elements.Add(player); //Bara för att lägga till för IsFreeSpot
         return player;
     }
 
@@ -66,18 +66,16 @@ class LevelData
         return isFreeSpot;
     }
 
-    //Returna en specifik enemy sen istället kanske. För att se vilken enemy man är i combat med.
+    //Returna en specifik enemy sen istället kanske. För att se vilken enemy man är i combat med. Eller separat metod?
     public bool IsEnemyOnSpot(int x, int y)
     {
         bool isEnemyOnSpot = Elements.Any(e => e.XPosition == x && e.YPosition == y && (e.Character == 'r' || e.Character == 's'));
         return isEnemyOnSpot;
     }
 
-    public bool IsPlayerOnSpot(int x, int y)
+    public static bool IsPlayerOnSpot(int x, int y, Player player)
     {
-        bool isPlayerOnSpot = Elements.Any(e => e.XPosition == x && e.YPosition == y && (e.Character == '@'));
-        //Villkor: om LevelElement.player xpos och ypos är lika med x och y ? true : false; eller?
-        //ska jag skicka in playerxpos och playerypos  eller inte
+        bool isPlayerOnSpot = x == player.XPosition && y == player.YPosition;
         return isPlayerOnSpot;
     }
 }

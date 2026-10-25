@@ -8,7 +8,7 @@ class Rat : Enemy
 
     }
     
-    public override void Update(LevelData levelData)
+    public override void Update(LevelData levelData, Player player)
     {
         Random rnd = new();
         int direction = rnd.Next(1,5);
