@@ -22,25 +22,38 @@ player.Draw();
 while (gameOn)
 {
     player.Draw();
-    ConsoleKeyInfo movementKey = Console.ReadKey(); //Byt variabelnamn? stänger ju av spelet också
+    ConsoleKeyInfo key = Console.ReadKey(); //Byt variabelnamn? stänger ju av spelet också
 
-    if (movementKey.Key == ConsoleKey.Escape)
+    if (key.Key == ConsoleKey.Escape)
     {
         Console.Clear();
         gameOn = false;
         return;
     }
-    player.Movement(movementKey, levelData);
+    gameOn = player.Movement(key, levelData, player);
     player.Draw();
-    
+
+    Enemy? killed = null;
     foreach (var levelElement in levelData.Elements)
     {
         if (levelElement is Enemy enemy)
         {
             enemy.Draw();
-            enemy.Update(levelData, player);
+            gameOn = enemy.Update(levelData, player);
             enemy.Draw();
+            if (enemy.HealthPoints < 0)
+            {
+                killed = enemy;
+            }
         }
     }
+
+    if (killed != null)
+    {
+        levelData.RemoveEnemyFromList(killed);
+    }
+
+    //Hitta enemyWhoDied och ta bort efter loopen istl
+    //levelData.RemoveEnemyFromList(enemyWhoDied);
 
 }
