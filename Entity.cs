@@ -2,26 +2,47 @@ namespace Labb2;
 
 class Entity : LevelElement
 {
+    public string? Name { get; private set; }
     public int HealthPoints { get; private set; }
-    
-    //Lägg in i konstruktorn och ta bort nullable senare
-    public Dice? AttackDice { get; set; }
-    public Dice? DefenceDice { get; set; }
+    public Dice AttackDice { get; set; }
+    public Dice DefenceDice { get; set; }
 
-    public Entity(int xPosition, int yPosition, char character, ConsoleColor color, int healthPoints)
+    public Entity(int xPosition, int yPosition, char character, ConsoleColor color, string? name, int healthPoints, Dice attackDice, Dice defenceDice)
     : base(xPosition, yPosition, character, color)
     {
+        Name = name;
         HealthPoints = healthPoints;
+        AttackDice = attackDice;
+        DefenceDice = defenceDice;
     }
     
-    //combat attacker plyer metod()
-    //combat attacker enemy metod() overloading gör klar
-    protected void Combat(Player attacker, Enemy defender)
+    protected static LevelElement? Combat(Entity attacker, Entity defender) 
     {
-        Console.WriteLine($"Player {attacker} is attacking Enemy {defender.Name}!");
+        bool bothEntitiesAlive = true;
+        LevelElement? whoDied = null;
+
+        Console.WriteLine($"{attacker.Name} is attacking {defender.Name}!");
+
+        while (bothEntitiesAlive)
+        {
+            int attackScore = attacker.AttackDice.Throw();
+            int defenceScore = defender.DefenceDice.Throw();
+            defender.HealthPoints -= TotalDamageDealt(attackScore, defenceScore);
+            if (defender.HealthPoints <= 0) { whoDied = defender; bothEntitiesAlive = false; };
+
+            attackScore = defender.AttackDice.Throw();
+            defenceScore = attacker.AttackDice.Throw();
+            attacker.HealthPoints -= TotalDamageDealt(attackScore, defenceScore);
+            if (attacker.HealthPoints <= 0) { whoDied = attacker; bothEntitiesAlive = false; };
+        }
+        Console.Write($"{whoDied} died.");
+
+        return whoDied;
     }
-    protected void Combat(Enemy attacker, Player defender)
+
+    private static int TotalDamageDealt(int attack, int defence)
     {
-        Console.WriteLine($"Enemy {attacker.Name} is attacking Player {defender}!");
+        int totalDamageDealt = attack - defence;
+        return totalDamageDealt;
     }
 }
