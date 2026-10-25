@@ -15,28 +15,48 @@ class Rat : Enemy
         switch (direction)
         {
             case 1:
-            if (levelData.IsFreeSpot(XPosition, YPosition - 1))
+            if (LevelData.IsPlayerOnSpot(XPosition, YPosition - 1, player))
+            {
+                Enemy enemy = levelData.IsEnemyOnSpot(XPosition + 1, YPosition)!;
+                Combat(enemy, player);
+            }
+            else if (levelData.IsFreeSpot(XPosition, YPosition - 1))
             {
                 Console.Write(" ");
                 YPosition--;
-            }
+            }            
             break;
             case 2:
-            if (levelData.IsFreeSpot(XPosition, YPosition + 1))
+            if (LevelData.IsPlayerOnSpot(XPosition, YPosition - 1, player))
+            {
+                Enemy enemy = levelData.IsEnemyOnSpot(XPosition + 1, YPosition)!;
+                Combat(enemy, player);
+            }
+            else if (levelData.IsFreeSpot(XPosition, YPosition + 1))
             {
                 Console.Write(" ");
                 YPosition++;
             }
             break;
             case 3:
-            if (levelData.IsFreeSpot(XPosition - 1, YPosition))
+            if (LevelData.IsPlayerOnSpot(XPosition, YPosition - 1, player))
+            {
+                Enemy enemy = levelData.IsEnemyOnSpot(XPosition + 1, YPosition)!;
+                Combat(enemy, player);
+            }
+            else if (levelData.IsFreeSpot(XPosition - 1, YPosition))
             {
                 Console.Write(" ");
                 XPosition--;
             }
             break;
             case 4:
-            if (levelData.IsFreeSpot(XPosition + 1, YPosition))
+            if (LevelData.IsPlayerOnSpot(XPosition, YPosition - 1, player))
+            {
+                Enemy enemy = levelData.IsEnemyOnSpot(XPosition + 1, YPosition)!;
+                Combat(enemy, player);
+            }
+            else if (levelData.IsFreeSpot(XPosition + 1, YPosition))
             {
                 Console.Write(" ");
                 XPosition++;
