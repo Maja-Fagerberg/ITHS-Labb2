@@ -8,38 +8,37 @@ class Player : Entity
 
     }
 
-    public void Movement(ConsoleKeyInfo movementKey, LevelData levelData)
+    public void Movement(ConsoleKeyInfo movementKey, LevelData levelData, Player player)
     {
-        switch (movementKey.Key)
+        int newX = XPosition;
+        int newY = YPosition;
+
+        switch(movementKey.Key)
         {
             case ConsoleKey.UpArrow:
-            if (levelData.IsFreeSpot(XPosition, YPosition - 1))
-            {
-                Console.Write(" ");
-                YPosition--;
-            }
+            newY = YPosition - 1;
             break;
             case ConsoleKey.DownArrow:
-            if (levelData.IsFreeSpot(XPosition, YPosition + 1))
-            {
-                Console.Write(" ");
-                YPosition++;
-            }
+            newY = YPosition + 1;
             break;
             case ConsoleKey.LeftArrow:
-            if (levelData.IsFreeSpot(XPosition - 1, YPosition))
-            {
-                Console.Write(" ");
-                XPosition--;
-            }
+            newX = XPosition - 1;
             break;
             case ConsoleKey.RightArrow:
-            if (levelData.IsFreeSpot(XPosition + 1, YPosition))
-            {
-                Console.Write(" ");
-                XPosition++;
-            }
+            newX = XPosition + 1;
             break;
+        }
+
+        Enemy? enemy = levelData.IsEnemyOnSpot(newX, newY);
+        if (enemy != null)
+        {
+            Combat(player, enemy);
+        }
+        else if (levelData.IsFreeSpot(newX, newY))
+        {
+            Console.Write(" ");
+            XPosition = newX;
+            YPosition = newY;
         }
     }
 }
