@@ -3,65 +3,56 @@ namespace Labb2;
 class Rat : Enemy
 {
     public Rat(int xPosition, int yPosition)
-    : base(xPosition, yPosition, 'r', 10, "rat")
+    : base(xPosition, yPosition, 'r', "rat", 10, new Dice(1,6,3), new Dice(1,6,1))
     {
 
     }
     
-    public override void Update(LevelData levelData, Player player)
+    public override bool Update(LevelData levelData, Player player)
     {
+        bool gameOn = true;
+        int newX = XPosition;
+        int newY = YPosition;
         Random rnd = new();
         int direction = rnd.Next(1,5);
+
         switch (direction)
         {
             case 1:
-            if (LevelData.IsPlayerOnSpot(XPosition, YPosition - 1, player))
-            {
-                Enemy enemy = levelData.IsEnemyOnSpot(XPosition + 1, YPosition)!;
-                Combat(enemy, player);
-            }
-            else if (levelData.IsFreeSpot(XPosition, YPosition - 1))
-            {
-                Console.Write(" ");
-                YPosition--;
-            }            
-            break;
+                newY = YPosition + 1;
+                break;
             case 2:
-            if (LevelData.IsPlayerOnSpot(XPosition, YPosition - 1, player))
-            {
-                Enemy enemy = levelData.IsEnemyOnSpot(XPosition + 1, YPosition)!;
-                Combat(enemy, player);
-            }
-            else if (levelData.IsFreeSpot(XPosition, YPosition + 1))
-            {
-                Console.Write(" ");
-                YPosition++;
-            }
-            break;
+                newY = YPosition - 1;
+                break;
             case 3:
-            if (LevelData.IsPlayerOnSpot(XPosition, YPosition - 1, player))
-            {
-                Enemy enemy = levelData.IsEnemyOnSpot(XPosition + 1, YPosition)!;
-                Combat(enemy, player);
-            }
-            else if (levelData.IsFreeSpot(XPosition - 1, YPosition))
-            {
-                Console.Write(" ");
-                XPosition--;
-            }
-            break;
+                newX = XPosition + 1;
+                break;
             case 4:
-            if (LevelData.IsPlayerOnSpot(XPosition, YPosition - 1, player))
-            {
-                Enemy enemy = levelData.IsEnemyOnSpot(XPosition + 1, YPosition)!;
-                Combat(enemy, player);
-            }
-            else if (levelData.IsFreeSpot(XPosition + 1, YPosition))
-            {
-                Console.Write(" ");
-                XPosition++;
-            }
-            break;
+                newX = XPosition - 1;
+                break;
         }
+
+        Enemy? enemy = levelData.IsEnemyOnSpot(XPosition, YPosition)!;
+        if (LevelData.IsPlayerOnSpot(newX, newY, player))
+        {
+            LevelElement? whoDied = Combat(player, enemy);
+            if (whoDied == enemy) 
+            {
+                levelData.RemoveEnemyFromList(enemy);
+            }
+            if (whoDied == player)
+            {
+                Console.WriteLine("GAMEOVER!!!!!!!!");
+                gameOn = false; //Behöver jag verkligen skicka en bool om gameOn eller kan det skötas på annat sätt? tänk på det
+            }
+        }
+        else if (levelData.IsFreeSpot(newX, newY))
+        {
+            Console.Write(" ");
+            XPosition = newX;
+            YPosition = newY;
+        }
+
+        return gameOn;
     }
 }
