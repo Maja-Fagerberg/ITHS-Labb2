@@ -23,4 +23,11 @@ abstract class LevelElement
         Console.SetCursorPosition(XPosition, YPosition);
         Console.ResetColor();
     }
+
+    public static bool IsInSight(LevelElement levelElement, Player player)
+    {
+        double distance = Math.Sqrt(Math.Pow(levelElement.XPosition - player.XPosition, 2) + Math.Pow(levelElement.YPosition - player.YPosition, 2));
+        if (distance <= 5) {return true;}
+        else {return false;}
+    }
 }
