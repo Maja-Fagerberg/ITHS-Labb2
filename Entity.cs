@@ -16,11 +16,12 @@ class Entity : LevelElement
         DefenceDice = defenceDice;
     }
     
-    protected static LevelElement? Combat(Entity attacker, Entity defender) 
+    protected static Entity? Combat(Entity attacker, Entity defender) 
     {
         bool bothEntitiesAlive = true;
-        LevelElement? whoDied = null;
+        Entity? whoDied = null;
 
+        Console.SetCursorPosition(0,19);
         Console.WriteLine($"{attacker.Name} is attacking {defender.Name}!");
 
         while (bothEntitiesAlive)
@@ -35,7 +36,8 @@ class Entity : LevelElement
             attacker.HealthPoints -= TotalDamageDealt(attackScore, defenceScore);
             if (attacker.HealthPoints <= 0) { whoDied = attacker; bothEntitiesAlive = false; };
         }
-        Console.Write($"{whoDied} died.");
+        Console.SetCursorPosition(0,19);
+        if (whoDied != null) {Console.Write($"{whoDied.Name} died.");}
 
         return whoDied;
     }
