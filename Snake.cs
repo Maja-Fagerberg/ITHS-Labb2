@@ -70,10 +70,6 @@ class Snake : Enemy
     return gameOn;
     }
 
-    //Gör om gör rätt, kanske ska ha random håll bort, inte specifikt ett håll
-    //Dvs, bara skriv vilket håll player är mot, om ovanför  > kan antingen gå neråt, nerhöger eller nervänster
-    //                                           om nedanför > antingen gå upp, upphöger eller uppvänster?
-    //                                           osv....
     private string DirectionPickerAccordingToPlayerPosition(Player player)
     {
         string direction = "";
