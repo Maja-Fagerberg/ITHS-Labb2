@@ -6,41 +6,37 @@ Console.CursorVisible = false;
 LevelData levelData = new();
 Player player = levelData.Load("Level1.txt");
 bool gameOn = true;
-
-//ritar ut allt på mappen från början, flytta senare
-foreach (var levelElement in levelData.Elements)
-{
-    // if (levelElement is not Enemy enemy)
-    // {
-    // levelElement.Draw();
-    // }
-
-    levelElement.Draw();
-}
 player.Draw();
 
 while (gameOn)
 {
+    foreach (var levelElement in levelData.Elements)
+    {
+        if (LevelElement.IsInSight(levelElement, player)) {levelElement.Draw();}
+    }
     player.Draw();
-    ConsoleKeyInfo key = Console.ReadKey(); //Byt variabelnamn? stänger ju av spelet också
+    ConsoleKeyInfo key = Console.ReadKey();
 
     if (key.Key == ConsoleKey.Escape)
     {
-        Console.Clear();
-        gameOn = false;
-        return;
+        break;
     }
+
     gameOn = player.Movement(key, levelData, player);
     player.Draw();
+    if (!gameOn)
+    {
+        break;
+    }
 
     Enemy? killed = null;
     foreach (var levelElement in levelData.Elements)
     {
         if (levelElement is Enemy enemy)
         {
-            enemy.Draw();
+            if (LevelElement.IsInSight(enemy, player)) {enemy.Draw();}
             gameOn = enemy.Update(levelData, player);
-            enemy.Draw();
+            if (LevelElement.IsInSight(enemy, player)) {enemy.Draw();}
             if (enemy.HealthPoints < 0)
             {
                 killed = enemy;
@@ -52,8 +48,4 @@ while (gameOn)
     {
         levelData.RemoveEnemyFromList(killed);
     }
-
-    //Hitta enemyWhoDied och ta bort efter loopen istl
-    //levelData.RemoveEnemyFromList(enemyWhoDied);
-
 }
