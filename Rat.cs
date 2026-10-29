@@ -1,3 +1,5 @@
+using System.Reflection.Metadata.Ecma335;
+
 namespace Labb2;
 
 class Rat : Enemy
@@ -36,14 +38,11 @@ class Rat : Enemy
         if (LevelData.IsPlayerOnSpot(newX, newY, player))
         {
             LevelElement? whoDied = Combat(player, enemy);
-            if (whoDied == enemy) 
-            {
-                levelData.RemoveEnemyFromList(enemy);
-            }
             if (whoDied == player)
             {
                 Console.WriteLine("GAMEOVER!!!!!!!!");
-                gameOn = false; //Behöver jag verkligen skicka en bool om gameOn eller kan det skötas på annat sätt? tänk på det
+                gameOn = false;
+                return gameOn;
             }
         }
         else if (levelData.IsFreeSpot(newX, newY))
