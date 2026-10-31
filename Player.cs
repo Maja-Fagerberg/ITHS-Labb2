@@ -8,7 +8,7 @@ class Player : Entity
 
     }
 
-    public bool Movement(ConsoleKeyInfo movementKey, LevelData levelData, Player player)
+    public bool Turn(ConsoleKeyInfo movementKey, LevelData levelData, Player player)
     {
         bool gameOn = true;
         int newX = XPosition;
@@ -38,6 +38,10 @@ class Player : Entity
             {
                 gameOn = false;
                 return gameOn;
+            }
+            else if (whoDied == enemy)
+            {
+                levelData.RemoveEnemyFromList(enemy);
             }
         }
         else if (levelData.IsFreeSpot(newX, newY))
