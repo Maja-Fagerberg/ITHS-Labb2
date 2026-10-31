@@ -4,8 +4,8 @@ class Entity : LevelElement
 {
     public string? Name { get; private set; }
     public int HealthPoints { get; private set; }
-    public Dice AttackDice { get; set; }
-    public Dice DefenceDice { get; set; }
+    public Dice AttackDice { get; private set; }
+    public Dice DefenceDice { get; private set; }
 
     public Entity(int xPosition, int yPosition, char character, ConsoleColor color, string? name, int healthPoints, Dice attackDice, Dice defenceDice)
     : base(xPosition, yPosition, character, color)
@@ -28,23 +28,18 @@ class Entity : LevelElement
         {
             int attackScore = attacker.AttackDice.Throw();
             int defenceScore = defender.DefenceDice.Throw();
-            defender.HealthPoints -= TotalDamageDealt(attackScore, defenceScore);
+            defender.HealthPoints -= attackScore - defenceScore;
             if (defender.HealthPoints <= 0) { whoDied = defender; bothEntitiesAlive = false; };
 
             attackScore = defender.AttackDice.Throw();
             defenceScore = attacker.AttackDice.Throw();
-            attacker.HealthPoints -= TotalDamageDealt(attackScore, defenceScore);
+            attacker.HealthPoints -= attackScore - defenceScore;
             if (attacker.HealthPoints <= 0) { whoDied = attacker; bothEntitiesAlive = false; };
         }
-        Console.SetCursorPosition(0,19);
-        if (whoDied != null) {Console.Write($"{whoDied.Name} died.");}
+
+        Console.SetCursorPosition(30,19);
+        if (whoDied != null) {Console.Write($"{whoDied.Name} was defeated.");}
 
         return whoDied;
-    }
-
-    private static int TotalDamageDealt(int attack, int defence)
-    {
-        int totalDamageDealt = attack - defence;
-        return totalDamageDealt;
     }
 }
