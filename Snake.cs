@@ -51,8 +51,7 @@ class Snake : Enemy
         {
             LevelElement? whoDied = Combat(enemy, player);
             if (whoDied == player)
-            {
-                Console.WriteLine("GAMEOVER!!!!!!!!");
+            { 
                 gameOn = false;
                 return gameOn;
             }
