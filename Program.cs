@@ -6,9 +6,14 @@ Console.CursorVisible = false;
 LevelData levelData = new();
 Player player = levelData.Load("Level1.txt");
 bool gameOn = true;
+int turn = 1;
+
+player.SetPlayerName(player);
+Console.Clear();
 
 while (gameOn)
 {
+    LevelElement.GeneralInformationPrint(player, turn);
     foreach (var levelElement in levelData.Elements)
     {
         if (LevelElement.IsInSightOfPlayer(levelElement, player)) 
@@ -48,9 +53,12 @@ while (gameOn)
                 }
             }
         }
+        
     if (killed != null)
     {
         levelData.RemoveEnemyFromList(killed);
     }
+
+    turn ++;
     }
 }
