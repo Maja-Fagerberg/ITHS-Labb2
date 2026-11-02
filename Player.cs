@@ -2,12 +2,11 @@ namespace Labb2;
 
 class Player : Entity
 {
+    public readonly int startHealthPoints = 100;
+    
     public Player(int xPosition, int yPosition)
-    : base(xPosition, yPosition, '@', ConsoleColor.Green, "player", 100, new Dice(2,6,2), new Dice(2,6,0)) 
-    {
-
-    }
-
+    : base(xPosition, yPosition, '@', ConsoleColor.Green, "player", 100, new Dice(2,6,2), new Dice(2,6,0)) { }
+    
     public bool Turn(ConsoleKeyInfo movementKey, LevelData levelData, Player player)
     {
         bool gameOn = true;
@@ -51,5 +50,11 @@ class Player : Entity
             YPosition = newY;
         }
         return gameOn;
+    }
+    
+    public void SetPlayerName(Player player)
+    {
+        Console.Write("Your name: ");
+        player.Name = Console.ReadLine()!.ToLower();
     }
 }
