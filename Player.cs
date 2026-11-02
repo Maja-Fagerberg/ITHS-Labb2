@@ -54,7 +54,7 @@ class Player : Entity
     
     public void SetPlayerName(Player player)
     {
-        Console.Write("Your name: ");
+        Console.Write("your name: ");
         player.Name = Console.ReadLine()!.ToLower();
     }
 }
