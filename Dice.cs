@@ -26,4 +26,9 @@ class Dice
 
         return score;
     }
+
+    public override string ToString()
+    {
+        return _numberOfDice + "d" + _sidesPerDice + "+" + _modifier;
+    }
 }
