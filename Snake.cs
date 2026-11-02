@@ -3,16 +3,13 @@ namespace Labb2;
 class Snake : Enemy
 {
     public Snake(int xPosition, int yPosition)
-    : base(xPosition, yPosition, 's', "snake", 25, new Dice(3,4,2), new Dice(1,8,5))
-    {
-
-    }
+    : base(xPosition, yPosition, 's', "snake", 25, new Dice(3,4,2), new Dice(1,8,5)) { }
     
     public override bool Update(LevelData levelData, Player player)
     {
         bool gameOn = true;
 
-        if (!IsPlayerClose(player)) { return gameOn; }
+        if (!IsPlayerCloser(player)) { return gameOn; }
         int newX = XPosition;
         int newY = YPosition;
 
@@ -52,7 +49,7 @@ class Snake : Enemy
         Enemy? enemy = levelData.IsEnemyOnSpot(XPosition, YPosition)!;
         if (LevelData.IsPlayerOnSpot(newX, newY, player))
         {
-            LevelElement? whoDied = Combat(player, enemy);
+            LevelElement? whoDied = Combat(enemy, player);
             if (whoDied == player)
             {
                 Console.WriteLine("GAMEOVER!!!!!!!!");
@@ -95,5 +92,13 @@ class Snake : Enemy
         }
 
         return isPlayerClose;
+    }
+
+    //Denna metod elr den andra?
+    public bool IsPlayerCloser(Player player)
+    {
+        double distance = Math.Sqrt(Math.Pow(player.XPosition - XPosition, 2) + Math.Pow(player.YPosition - YPosition, 2));
+        if (distance <= 2) {return true;}
+        else {return false;}
     }
 }
