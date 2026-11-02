@@ -15,9 +15,9 @@ class LevelData
     {
         using StreamReader reader = new(filename);
         int x = 0;
-        int y = 0;
+        int y = 4;
         int playerX = 0;
-        int playerY = 0;
+        int playerY = 4;
         
         while (!reader.EndOfStream)
         {
