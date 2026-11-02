@@ -33,12 +33,16 @@ abstract class LevelElement
         }
     }
 
-
-
     public static bool IsInSightOfPlayer(LevelElement levelElement, Player player)
     {
         double distance = Math.Sqrt(Math.Pow(levelElement.XPosition - player.XPosition, 2) + Math.Pow(levelElement.YPosition - player.YPosition, 2));
         if (distance <= 5) {return true;}
         else {return false;}
+    }
+
+    public static void GeneralInformationPrint(Player player, int turn)
+    {
+        Console.SetCursorPosition(0,0);
+        Console.Write("name: " + player.Name + "  -  hp: " + player.HealthPoints + "/" + player.startHealthPoints + "  -  turn: " + turn + "         ");
     }
 }
