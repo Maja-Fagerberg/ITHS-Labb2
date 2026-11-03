@@ -18,49 +18,40 @@ class Entity : LevelElement
     
     protected static Entity? Combat(Entity attacker, Entity defender) 
     {
-        bool bothEntitiesAlive = true;
         Entity? whoDied = null;
         int newHp;
 
-        while (bothEntitiesAlive)
-        {
-            int attackScore = attacker.AttackDice.Throw();
-            int defenceScore = defender.DefenceDice.Throw();
-            int totalDamage = AttackResult(attackScore, defenceScore);
-            if (totalDamage > 0)
-            {    
-                newHp = defender.HealthPoints - totalDamage;
-                defender.HealthPoints = newHp;
-            } 
-            if (defender.HealthPoints <= 0) 
-            { 
-                whoDied = defender; 
-                bothEntitiesAlive = false; 
-                break;
-            }
-            Console.SetCursorPosition(0,2);
-            CombatInformationPrint(attacker,defender,attackScore,defenceScore);
-
-            attackScore = defender.AttackDice.Throw();
-            defenceScore = attacker.DefenceDice.Throw();
-            totalDamage = AttackResult(attackScore, defenceScore);
-            if (totalDamage > 0)
-            {    
-                newHp = attacker.HealthPoints - totalDamage;
-                attacker.HealthPoints = newHp;
-            } 
-            if (attacker.HealthPoints <= 0) 
-            { 
-                whoDied = attacker; 
-                bothEntitiesAlive = false; 
-                break;
-            }
-            Console.SetCursorPosition(0,2);
-            CombatInformationPrint(defender,attacker,attackScore,defenceScore);
+        int attackScore = attacker.AttackDice.Throw();
+        int defenceScore = defender.DefenceDice.Throw();
+        int totalDamage = AttackResult(attackScore, defenceScore);
+        if (totalDamage > 0)
+        {    
+            newHp = defender.HealthPoints - totalDamage;
+            defender.HealthPoints = newHp;
+        } 
+        if (defender.HealthPoints <= 0) 
+        { 
+            whoDied = defender; 
         }
-
         Console.SetCursorPosition(0,1);
-        if (whoDied != null) {Console.Write($"{whoDied.Name} was defeated.");}
+        CombatInformationPrint(attacker, defender, attackScore, defenceScore, totalDamage);
+
+        attackScore = defender.AttackDice.Throw();
+        defenceScore = attacker.DefenceDice.Throw();
+        totalDamage = AttackResult(attackScore, defenceScore);
+        if (totalDamage > 0)
+        {    
+            newHp = attacker.HealthPoints - totalDamage;
+            attacker.HealthPoints = newHp;
+        } 
+        if (attacker.HealthPoints <= 0) 
+        { 
+            whoDied = attacker; 
+        }
+        Console.SetCursorPosition(0,2);
+        CombatInformationPrint(defender, attacker, attackScore, defenceScore, totalDamage);
+
+        Console.SetCursorPosition(0,3);
 
         return whoDied;
     }
@@ -71,8 +62,31 @@ class Entity : LevelElement
         return result;
     }
 
-    static void CombatInformationPrint(Entity attacker, Entity defender, int attackScore, int defenceScore)
+    static void CombatInformationPrint(Entity attacker, Entity defender, int attackScore, int defenceScore, int totalDamage)
     {
-        Console.Write("the " + attacker.Name + "(atk: " + attacker.AttackDice + " => " + attackScore + ") attacked " + defender.Name + " (def: " + defender.DefenceDice + " => " + defenceScore +").       ");
+        Console.Write(attacker.Name + " (atk: " + attacker.AttackDice + " => " + attackScore + ") attacked " + defender.Name + " (def: " + defender.DefenceDice + " => " + defenceScore +"), ");
+        if (defender.HealthPoints <= 0) 
+        {
+            Console.Write("which led to " + defender.Name + " being defeated!! ");
+            if (defender.HealthPoints < 0 && defender is Player)
+            {
+                Console.Write("(GAME OVER)           ");
+            }
+        }
+        else
+        {
+            Console.Write(totalDamage switch
+            {
+                <= 0 => "however no damage was dealt to " + defender.Name + ".....                                       ",
+                < 7 => "damaging " + defender.Name + " slightly.                                                      ",
+                >= 7 => "dealing MASSIVE damage to " + defender.Name + "!!!                                            "
+            });
+        }
     }
+
+    // public static void ClearDefeatedPrint()
+    // {
+    //     Console.SetCursorPosition(0,3);
+    //     Console.Write("                                                        ");
+    // }
 }
