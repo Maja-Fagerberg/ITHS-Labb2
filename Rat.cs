@@ -5,7 +5,7 @@ namespace Labb2;
 class Rat : Enemy
 {
     public Rat(int xPosition, int yPosition)
-    : base(xPosition, yPosition, 'r', "rat", 10, new Dice(1,6,3), new Dice(1,6,1)) { }
+    : base(xPosition, yPosition, 'r', ConsoleColor.DarkRed, "rat", 10, new Dice(1,6,3), new Dice(1,6,1)) { }
     
     public override bool Update(LevelData levelData, Player player)
     {

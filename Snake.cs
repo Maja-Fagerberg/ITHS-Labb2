@@ -3,7 +3,7 @@ namespace Labb2;
 class Snake : Enemy
 {
     public Snake(int xPosition, int yPosition)
-    : base(xPosition, yPosition, 's', "snake", 25, new Dice(3,4,2), new Dice(1,8,5)) { }
+    : base(xPosition, yPosition, 's', ConsoleColor.Green, "snake", 25, new Dice(3,4,2), new Dice(1,8,5)) { }
     
     public override bool Update(LevelData levelData, Player player)
     {
