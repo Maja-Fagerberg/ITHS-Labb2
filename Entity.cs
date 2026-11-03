@@ -1,3 +1,5 @@
+using System.Drawing;
+
 namespace Labb2;
 
 class Entity : LevelElement
@@ -64,24 +66,27 @@ class Entity : LevelElement
 
     static void CombatInformationPrint(Entity attacker, Entity defender, int attackScore, int defenceScore, int totalDamage)
     {
-        Console.Write(attacker.Name + " (atk: " + attacker.AttackDice + " => " + attackScore + ") attacked " + defender.Name + " (def: " + defender.DefenceDice + " => " + defenceScore +"), ");
+        Console.ForegroundColor = attacker.Color;
+        string combatMessage = attacker.Name + " (atk: " + attacker.AttackDice + " => " + attackScore + ") attacked " + defender.Name + " (def: " + defender.DefenceDice + " => " + defenceScore + "), ";
         if (defender.HealthPoints <= 0) 
         {
-            Console.Write("which led to " + defender.Name + " being defeated!! ");
+            combatMessage += "which led to " + defender.Name + " being defeated!!        ";
             if (defender.HealthPoints < 0 && defender is Player)
             {
-                Console.Write("(GAME OVER)           ");
+                combatMessage += "(GAME OVER)           ";
             }
         }
         else
         {
-            Console.Write(totalDamage switch
+            combatMessage += totalDamage switch
             {
-                <= 0 => "however no damage was dealt to " + defender.Name + ".....                                       ",
-                < 7 => "damaging " + defender.Name + " slightly.                                                      ",
-                >= 7 => "dealing MASSIVE damage to " + defender.Name + "!!!                                            "
-            });
+                <= 0 => "however no damage was dealt to " + defender.Name + ".....                                ",
+                < 7 => "damaging " + defender.Name + " slightly.                                                  ",
+                >= 7 => "dealing MASSIVE damage to " + defender.Name + "!!!                                       "
+            };
         }
+        
+        Console.Write(combatMessage);
     }
 
     // public static void ClearDefeatedPrint()
